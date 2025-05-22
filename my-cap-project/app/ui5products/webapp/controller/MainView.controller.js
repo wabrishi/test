@@ -78,46 +78,31 @@ sap.ui.define([
             const nQuantity = sQuantity ? parseInt(sQuantity, 10) : null; // Handle optional quantity
 
             if (this._editingProductContext) { // === UPDATE Product ===
-                const sPath = this._editingProductContext.getPath();
-                const oModel = oView.getModel(); // Default model
-
-                // Update properties directly on the model.
-                // OData V4 model batches these and sends PATCH.
-                oModel.setProperty(sPath + "/name", sName);
-                oModel.setProperty(sPath + "/descr", sDescr);
-                oModel.setProperty(sPath + "/price", nPrice);
-                if (nQuantity !== null) {
-                    oModel.setProperty(sPath + "/quantity", nQuantity);
-                } else {
-                     // If quantity is empty, you might want to set it to null or a default,
-                     // or handle as per backend expectation. Here, we explicitly set it if provided.
-                     // If your service expects quantity to always be present, add validation.
-                     // For now, if it's cleared, it might not send the property if it was null before.
-                     // Or, if your field is not nullable, this could be an issue.
-                     // Let's ensure we set it, even to null if the backend allows.
-                    oModel.setProperty(sPath + "/quantity", null); // Or handle as per backend logic for empty optional fields
-                }
-
-
-                // The OData V4 model should handle the PATCH request automatically.
-                // You can attach to 'patchSent'/'patchCompleted' events on the binding if specific handling is needed.
-                // Or check oModel.hasPendingChanges() and oModel.submitBatch("auto").
-                // For simplicity, relying on auto-batching.
-                 if (oModel.hasPendingChanges()) {
-                    oModel.submitBatch("$auto").then(function() {
-                        MessageToast.show("Product updated: " + sName);
-                        // Potentially refresh the binding if data doesn't update automatically,
-                        // though V4 model usually handles this.
-                        // this.byId("productsTable").getBinding("items").refresh();
-                    }.bind(this)).catch(function(oError) {
-                        MessageToast.show("Error updating product: " + oError.message);
-                    });
+                const oContext = this._editingProductContext;
+                const oModel = oContext.getModel();
+            
+                // Set updated values on the context itself (OData V4 supports this)
+                oContext.setProperty("name", sName);
+                oContext.setProperty("descr", sDescr);
+                oContext.setProperty("price", nPrice);
+                oContext.setProperty("quantity", nQuantity !== null ? nQuantity : null);
+            
+                // Submit batch if there are changes
+                if (oModel.hasPendingChanges()) {
+                    oModel.submitBatch("$auto")
+                        .then(() => {
+                            MessageToast.show("Product updated: " + sName);
+                            // Optional: refresh list/table if needed
+                            // this.byId("productsTable").getBinding("items").refresh();
+                        })
+                        .catch((oError) => {
+                            MessageToast.show("Error updating product: " + oError.message);
+                        });
                 } else {
                     MessageToast.show("No changes detected for product: " + sName);
                 }
-
-
-            } else { // === CREATE Product ===
+            }            
+             else { // === CREATE Product ===
                 const oProductPayload = {
                     name: sName,
                     descr: sDescr,

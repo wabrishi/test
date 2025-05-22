@@ -2,7 +2,8 @@
     controllerName="ui5.products.controller.MainView"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>appTitle}"> <!-- Changed from i18n>title to i18n>appTitle to match manifest -->
+    <App id= "app">
+    <Page id="page" title="{i18n>appTitle}"> 
         <content>
             <Table id="productsTable" items="{path: '/Products'}">
                 <headerToolbar>
@@ -18,7 +19,7 @@
                     <Column><Text text="Description"/></Column>
                     <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Price"/></Column>
                     <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Quantity"/></Column>
-                    <Column width="4rem"/> <!-- Action column -->
+                    <Column width="6rem"/> <!-- Action column -->
                 </columns>
                 <items>
                     <ColumnListItem vAlign="Middle">
@@ -38,4 +39,5 @@
             </Table>
         </content>
     </Page>
+    </App>
 </mvc:View>
