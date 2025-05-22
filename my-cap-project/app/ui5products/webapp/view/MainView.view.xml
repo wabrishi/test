@@ -1,0 +1,41 @@
+<mvc:View
+    controllerName="ui5.products.controller.MainView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>appTitle}"> <!-- Changed from i18n>title to i18n>appTitle to match manifest -->
+        <content>
+            <Table id="productsTable" items="{path: '/Products'}">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Products List"/>
+                        <ToolbarSpacer/>
+                        <Button text="Add Product" press="onOpenCreateDialog"/>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column><Text text="ID"/></Column>
+                    <Column><Text text="Name"/></Column>
+                    <Column><Text text="Description"/></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Price"/></Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Quantity"/></Column>
+                    <Column width="4rem"/> <!-- Action column -->
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text text="{ID}"/>
+                            <Text text="{name}"/>
+                            <Text text="{descr}"/>
+                            <Text text="{price}"/>
+                            <Text text="{quantity}"/>
+                            <HBox> <!-- Use HBox for multiple actions in one cell -->
+                                <Button icon="sap-icon://edit" type="Transparent" press="onOpenEditDialog" class="sapUiTinyMarginEnd"/>
+                                <Button icon="sap-icon://delete" type="Transparent" press="onDeleteProduct"/>
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>
