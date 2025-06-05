@@ -1,0 +1,32 @@
+<mvc:View
+    controllerName="my.bookshop.freestyle_browse.controller.BookList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <App id="app">
+        <pages>
+            <Page id="page" title="{i18n>title}">
+                <content>
+                    <List
+                        id="booksList"
+                        headerText="Books"
+                        items="{
+                            path: '/Books',
+                            sorter: {
+                                path: 'title',
+                                descending: false
+                            }
+                        }">
+                        <items>
+                            <StandardListItem
+                                title="{title}"
+                                description="{author}"
+                                info="{price} EUR"
+                                type="Navigation"
+                                press=".onBookPress"/>
+                        </items>
+                    </List>
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>
