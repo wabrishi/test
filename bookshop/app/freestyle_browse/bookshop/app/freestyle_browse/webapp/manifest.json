@@ -1,0 +1,119 @@
+{
+    "_version": "1.58.0",
+    "sap.app": {
+        "id": "my.bookshop.freestyle_browse",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{appTitle}}",
+        "dataSources": {
+            "mainService": {
+                "uri": "/bookshop/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "rootView": {
+            "viewName": "my.bookshop.freestyle_browse.view.BookList",
+            "type": "XML",
+            "async": true,
+            "id": "BookList"
+        },
+        "dependencies": {
+            "minUI5Version": "1.108.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.ui.layout": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "my.bookshop.freestyle_browse.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "my.bookshop.freestyle_browse.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RouteBookList",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetBookList"
+                    ]
+                },
+                {
+                    "name": "RouteBookDetail",
+                    "pattern": "books/{bookId}",
+                    "target": [
+                        "TargetBookDetail"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetBookList": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "BookList",
+                    "viewName": "BookList"
+                },
+                "TargetBookDetail": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "BookDetail",
+                    "viewName": "BookDetail"
+                }
+            }
+        }
+    }
+}

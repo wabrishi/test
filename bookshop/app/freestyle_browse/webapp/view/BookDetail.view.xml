@@ -1,0 +1,33 @@
+<mvc:View
+    controllerName="my.bookshop.freestyle_browse.controller.BookDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <Page id="detailPage" title="{i18n>detailTitle}" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <f:SimpleForm id="bookDetailsForm"
+                    editable="false"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+                    columnsXL="1" columnsL="1" columnsM="1"
+                    singleContainerFullSize="false" >
+                    <f:content>
+                        <Label text="{i18n>bookTitle}" />
+                        <Text text="{title}" />
+                        <Label text="{i18n>bookAuthor}" />
+                        <Text text="{author}" />
+                        <Label text="{i18n>bookISBN}" />
+                        <Text text="{ISBN}" />
+                        <Label text="{i18n>bookStock}" />
+                        <Text text="{stock}" />
+                        <Label text="{i18n>bookPrice}" />
+                        <Text text="{price} EUR" />
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
